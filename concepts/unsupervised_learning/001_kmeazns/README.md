@@ -1,4 +1,4 @@
-# 013 — Elbow Method
+# 01 — Elbow Method
 
 ## Overview
 
@@ -59,3 +59,48 @@ However, there is an important problem.
 Increasing K generally decreases inertia.
 
 Therefore, we cannot simply choose the value of K with the lowest inertia.
+
+# Silhouette Score
+
+The **Silhouette Score** evaluates how well each data point fits within
+its assigned cluster compared with the nearest neighboring cluster.
+
+For each point:
+
+- `a(i)` = average distance from the point to points in its own cluster.
+- `b(i)` = average distance from the point to points in the nearest other cluster.
+
+The silhouette value is:
+
+$$
+s(i)=\frac{b(i)-a(i)}{\max(a(i),b(i))}
+$$
+
+The score ranges from:
+
+$$
+-1 \leq s(i) \leq 1
+$$
+
+### Interpretation
+
+- Close to `+1` → point is well separated from other clusters.
+- Around `0` → point lies near a cluster boundary.
+- Negative → point may be assigned to the wrong cluster.
+
+The overall `silhouette_score()` is the average silhouette value across
+all samples.
+
+In this experiment:
+
+- `K = 2` → approximately **0.67**
+- `K = 3` → approximately **0.55**
+
+Therefore, according to the Silhouette Score, **K = 2 produces better
+separated clusters than K = 3** for this dataset.
+
+This differs from the Elbow Method, which suggested approximately
+`K = 3`.
+
+This demonstrates that different clustering evaluation methods can
+recommend different values of `K`.
